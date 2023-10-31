@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr2qb210y3t7g"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_mvkot"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_mvkot")
+
+[node name="CurrentLevel" type="Label" parent="."]
+offset_right = 54.0
+offset_bottom = 26.0
+text = "Level 2"
+
+[node name="GemsLabel" type="Label" parent="."]
+offset_top = 32.0
+offset_right = 62.0
+offset_bottom = 58.0
+text = "Gems: 0
+"

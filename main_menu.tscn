@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdbip5royouel"]
+
+[ext_resource type="Script" path="res://main_menu.gd" id="1_iw1wy"]
+[ext_resource type="AudioStream" uid="uid://dnutfyya2c4qu" path="res://Music/Map (basic version).wav" id="2_fxuv6"]
+[ext_resource type="AudioStream" uid="uid://h6q454ubi045" path="res://Music/Warp Jingle.wav" id="3_1b73n"]
+
+[sub_resource type="Gradient" id="Gradient_ej30p"]
+offsets = PackedFloat32Array(0.980198, 1)
+colors = PackedColorArray(0, 0.245274, 0.386095, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_c4iyq"]
+gradient = SubResource("Gradient_ej30p")
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_iw1wy")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -848.0
+offset_top = -56.0
+offset_right = 1864.0
+offset_bottom = 936.0
+texture = SubResource("GradientTexture1D_c4iyq")
+
+[node name="TitleLabel" type="Label" parent="."]
+offset_left = 480.0
+offset_top = 160.0
+offset_right = 670.0
+offset_bottom = 202.0
+theme_type_variation = &"HeaderLarge"
+text = "2D Platformer"
+
+[node name="Options" type="VFlowContainer" parent="."]
+offset_left = 528.0
+offset_top = 296.0
+offset_right = 616.0
+offset_bottom = 616.0
+
+[node name="StartButton" type="Button" parent="Options"]
+layout_mode = 2
+text = "Start"
+
+[node name="FullScreen" type="Button" parent="Options"]
+layout_mode = 2
+text = "FullScreen"
+
+[node name="QuitButton" type="Button" parent="Options"]
+layout_mode = 2
+text = "Quit"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_fxuv6")
+
+[node name="WarpJingle" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_1b73n")
+
+[connection signal="pressed" from="Options/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Options/FullScreen" to="." method="_on_full_screen_pressed"]
+[connection signal="pressed" from="Options/QuitButton" to="." method="_on_quit_button_pressed"]

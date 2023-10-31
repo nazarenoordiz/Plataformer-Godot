@@ -1,0 +1,113 @@
+[gd_scene load_steps=15 format=3 uid="uid://crgtv2orgdhkw"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_7tits"]
+[ext_resource type="Texture2D" uid="uid://b3g5thss5qc83" path="res://nuevopersonaje.png" id="2_tqo7g"]
+[ext_resource type="AudioStream" uid="uid://xbr4w13ij1gg" path="res://jump.wav" id="3_3nxhp"]
+[ext_resource type="Texture2D" uid="uid://crpv8h8gd6sbk" path="res://intento_1_particulas.png" id="4_dj8qp"]
+[ext_resource type="Texture2D" uid="uid://be853tug3l7km" path="res://intento_2_particulas.png" id="5_lprth"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7isi"]
+atlas = ExtResource("2_tqo7g")
+region = Rect2(0, 208, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjdkf"]
+atlas = ExtResource("2_tqo7g")
+region = Rect2(64, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pdye0"]
+atlas = ExtResource("2_tqo7g")
+region = Rect2(16, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyojr"]
+atlas = ExtResource("2_tqo7g")
+region = Rect2(32, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gpq8a"]
+atlas = ExtResource("2_tqo7g")
+region = Rect2(48, 208, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pc3e8"]
+atlas = ExtResource("2_tqo7g")
+region = Rect2(80, 208, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_67kxx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7isi")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjdkf")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pdye0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyojr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gpq8a")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pc3e8")
+}],
+"loop": true,
+"name": &"wall_slide",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sf7tj"]
+radius = 6.0
+height = 14.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_anr5a"]
+gravity = Vector3(0, 0, 0)
+collision_use_scale = true
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(0, -3)
+script = ExtResource("1_7tits")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_67kxx")
+animation = &"run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_sf7tj")
+
+[node name="JumpSfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_3nxhp")
+volume_db = -2.0
+
+[node name="RunParticle" type="GPUParticles2D" parent="."]
+position = Vector2(-15, 0)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_anr5a")
+texture = ExtResource("4_dj8qp")
+speed_scale = 2.37
+explosiveness = 0.15
+
+[node name="WalkParticle" type="GPUParticles2D" parent="."]
+position = Vector2(-15, 0)
+process_material = SubResource("ParticleProcessMaterial_anr5a")
+texture = ExtResource("5_lprth")
+speed_scale = 2.37
+explosiveness = 0.15
+
+[connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
